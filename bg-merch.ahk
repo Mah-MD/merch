@@ -1,18 +1,28 @@
-; Warframe Trade Hotkey Message Sender
-; Press Ctrl+Alt+1, 2, 3... to send specific trade messages
-; Press Ctrl+Alt+X to exit
-
+; bg-paste.ahk – Combines Warframe trade hotkeys with a clipboard-paste hotkey
 #Persistent
+#SingleInstance Force
 #NoEnv
 SendMode Input
 SetWorkingDir %A_ScriptDir%
 SetTitleMatchMode, 2
-    
-TrayTip, Warframe BACKGROUND-Trade, Script is running!`nUse Ctrl+Alt+1~9 to send messages.`nPress Ctrl+Alt+Z to exit., 1, 1
 
-^!z::ExitApp ; Exit script with Ctrl+Alt+Z
+; Notify that the script is running
+TrayTip, Warframe BACKGROUND-Paste, Script running! Trade hotkeys (Ctrl+Alt+1–9) and paste (Ctrl+Shift+P) active., 1, 1
 
-; Example Trade Messages - Customise freely
+^!z::ExitApp  ; Ctrl+Alt+Z → exit
+
+; — Clipboard paste hotkey — Ctrl+Shift+P
+^+p::
+    ClipWait, 1
+    if (ErrorLevel) {
+        MsgBox, 48, bg-paste.ahk, No clipboard contents detected.
+        return
+    }
+    ; “Type” out whatever is on the clipboard
+    SendInput, %Clipboard%
+return
+
+; — Example trade‐message hotkeys — Ctrl+Alt+1..3
 ^!1::
     SendTrade("WTB TRASH Rivens [Torid] ------ [Burston] ------ [Nikana] ------ [Verglas] ------ [Magistar]")
 return
@@ -25,13 +35,12 @@ return
     SendTrade("WTB [Adaptation] 10:platinum:")
 return
 
-; You can add more hotkeys as needed:
-; ^!4::SendTrade("Message here") return
+; Add more trade hotkeys here:
+; ^!4::SendTrade("Your custom message here") return
 
+; — Helper function to send & send‐Enter —
 SendTrade(msg) {
-    ; Send the message text
     SendInput, {Raw}%msg%
     Sleep, 300
-    ; Press Enter
     SendInput, {Enter}
 }
