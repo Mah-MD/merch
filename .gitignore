@@ -1,5 +1,0 @@
-# Ignore the merch directory
-/merch/
-
-# Keep tracking .gitignore files (remove or comment out the next line)
-**/.gitignore
