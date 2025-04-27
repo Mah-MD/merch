@@ -32,7 +32,7 @@ return
 return
 
 ^!3::
-    SendTrade("WTB [Adaptation] 10:platinum:")
+    SendTrade("WTB [Baruuk Prime] BP!! 10:platinum::platinum:")
 return
 
 ; Add more trade hotkeys here:
